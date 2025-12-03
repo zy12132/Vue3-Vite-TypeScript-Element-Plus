@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["esnext", "dom"], //从头到这里的四个配置是用最新的 ES 语法和模块系统开发
+    "baseUrl": "./", // 解析非相对模块的基地址，默认是当前目录
+    "paths": {
+      "@/*": [
+        // 路径映射，相对于baseUrl
+        "src/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*", // 包含所有 .vue/.ts 源码
+    "src/types/**/*.d.ts" // 包含自动生成的类型文件
+  ]
+}
