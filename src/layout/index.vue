@@ -3,7 +3,11 @@
  @date 2025-12-03
 -->
 <template>
-  <div class="container">全局组件</div>
+  <!-- 唯一根节点 -->
+  <div class="app-layout">
+    <div class="container">全局组件</div>
+    <router-view />
+  </div>
 </template>
 
 <script setup></script>

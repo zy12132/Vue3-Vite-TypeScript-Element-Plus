@@ -3,7 +3,7 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css"; // 导入进度条样式
 
 import { useUserStoreHook } from "@/store/modules/user";
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 // 通过懒加载方式导入全局布局组件（Layout），避免首屏加载过多代码，提升性能；
 // Layout 通常是项目的公共布局（如包含侧边栏、顶部导航、内容区域），大部分页面会嵌套在这个布局中。
@@ -13,7 +13,7 @@ export const Layout = () => import("@/layout/index.vue");
 export const constantRoutes: RouteRecordRaw[] = [
   {
     path: "/redirect",
-    component: Layout, // 嵌套在全局布局中
+    component: Layout, // 嵌套在全局布局中y
     meta: { hidden: true }, // 表示该路由不在侧边栏菜单中显示；
     children: [
       {
@@ -50,7 +50,7 @@ export const constantRoutes: RouteRecordRaw[] = [
  * 创建路由
  */
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes: constantRoutes as RouteRecordRaw[],
   // 刷新时，滚动条位置还原
   scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -70,5 +70,24 @@ export function resetRouter() {
 // 全局前置守卫
 router.beforeEach(async (to, from, next) => {
   NProgress.start(); // 开启进度条
+  // const userStore = useUserStoreHook();
+  next();
+  // 1. 不需要登录的路由（白名单）直接放行
+  //   if (to.path === '/login' || to.path === '/redirect') {
+  //     next();
+  //     return;
+  //   }
+
+  //   // 2. 需要登录的路由：检查 Token
+  //   if (userStore.token) {
+  //     next(); // 已登录，放行
+  //   } else {
+  //     next('/login'); // 未登录，跳转到登录页
+  //   }
+});
+
+// 全局后置守卫：关闭进度条（可选，提升体验）
+router.afterEach(() => {
+  NProgress.done();
 });
 export default router;

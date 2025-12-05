@@ -7,8 +7,10 @@
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
-     "lint:stylelint": "stylelint  \"**/*.{css,scss,vue,html}\" --fix",
-    "lint:prettier": "prettier --write \"**/*.{js,ts,json,css,less,scss,vue,html,md}\""
+    "lint:stylelint": "stylelint  \"**/*.{css,scss,vue,html}\" --fix",
+    "lint:prettier": "prettier --write \"**/*.{js,ts,json,css,less,scss,vue,html,md}\"",
+    "prepare": "husky install",
+    "lint:lint-staged": "lint-staged"
   },
   "dependencies": {
     "@wangeditor/editor": "^5.1.23",
@@ -36,6 +38,8 @@
     "eslint-plugin-vue": "^10.6.2",
     "fast-glob": "^3.2.11",
     "globals": "^16.5.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^16.2.7",
     "postcss": "^8.5.6",
     "postcss-html": "^1.8.0",
     "postcss-scss": "^4.0.9",
@@ -57,5 +61,26 @@
     "vite": "^7.2.4",
     "vite-plugin-svg-icons": "^2.0.1",
     "vue-tsc": "^3.1.4"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{cjs,json}": [
+      "prettier --write"
+    ],
+    "*.{vue,html}": [
+      "eslint --fix",
+      "prettier --write",
+      "stylelint --fix"
+    ],
+    "*.{scss,css}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
   }
 }
